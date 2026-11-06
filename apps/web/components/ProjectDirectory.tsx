@@ -1,0 +1,6 @@
+'use client';
+import { useState } from 'react';
+import { projects } from '@/lib/profile';
+import { Window } from './Window';
+import { Icon } from './Icon';
+export function ProjectDirectory() { const [category,setCategory]=useState('All'); return <Window title="Hard_Drive/Projects/" meta={`${projects.length} ITEMS`}><div className="directory-toolbar"><span className="mono">View by category:</span><div className="filters">{['All', ...new Set(projects.map(p=>p.category))].map(c=><button key={c} aria-pressed={category===c} onClick={()=>setCategory(c)}>{c}{c==='All' ? ` (${projects.length})` : ''}</button>)}</div></div><div className="directory-grid">{projects.filter(p=>category==='All'||p.category===category).map(p=><article className="project" key={p.name}><div className="project-preview"><Icon name={p.symbol} size={72}/><span>{p.name}</span></div><div className="window-body"><h2>{p.name}</h2><p>{p.description}</p><div className="tags">{p.tags.map(t=><span key={t}>{t}</span>)}</div><div className="contribution"><h3>My contribution</h3><p>{p.contribution}</p></div></div></article>)}</div><div className="window-status"><span>{projects.filter(p=>category==='All'||p.category===category).length} items shown</span><span>LOCAL PROJECT DIRECTORY</span></div></Window>; }
